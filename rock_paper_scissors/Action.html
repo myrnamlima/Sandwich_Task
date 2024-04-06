@@ -1,0 +1,92 @@
+{% block title %}
+This is Rock, Paper, Scissors Round
+{% endblock %}
+
+{% block content %}
+{# NOTE: NOT USING {% formfields %} #}
+
+<input type="hidden" name="action" id="response"/>
+
+<button type="button" id="btn_1" class="btn btn-primary">Rock</button>
+<button type="button" id="btn_2" class="btn btn-primary">Paper</button>
+<button type="button" id="btn_3" class="btn btn-primary">Scissors</button>
+
+<br><br>
+
+<p>You have selected: <span id="my_selection">No selection yet</span></p>
+
+<br><br>
+
+<button class="otree-btn-next btn btn-primary">Submit</button>
+
+{% endblock %}
+
+{% block script %}
+<script>
+    $(document).ready(function() {
+        $("#btn_1").click(function() {
+            // sets hidden field; this is what is passed back to otree
+            $("#response").val("1");
+            // sets span element containing action label
+            $("#my_selection").text("Rock");
+        });
+
+        $("#btn_2").click(function() {
+            $("#response").val("2");
+            $("#my_selection").text("Paper");
+        });
+
+        $("#btn_3").click(function() {
+            $("#response").val("3");
+            $("#my_selection").text("Scissors");
+        });
+
+        let c = document.getElementById('myCanvas');
+        let ctx = c.getContext('2d');
+
+        ctx.rect(200, 200, 450, 450);
+        ctx.rect(350, 200, 150, 450);
+        ctx.rect(200, 350, 450, 150);
+
+        ctx.stroke();
+
+        ctx.font = '28px Roboto';
+        ctx.fillStyle = 'red';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        let payoffs = {{ C.PAYOFFS }};
+        console.log(payoffs);
+
+        let pt1 = 275;
+        let pt2 = 425;
+        let pt3 = 575;
+
+        ctx.fillText(payoffs[0][0], pt1, pt1);
+        ctx.fillText(payoffs[0][1], pt2, pt1);
+        ctx.fillText(payoffs[0][2], pt3, pt1);
+
+        ctx.fillText(payoffs[1][0], pt1, pt2);
+        ctx.fillText(payoffs[1][1], pt2, pt2);
+        ctx.fillText(payoffs[1][2], pt3, pt2);
+
+        ctx.fillText(payoffs[2][0], pt1, pt3);
+        ctx.fillText(payoffs[2][1], pt2, pt3);
+        ctx.fillText(payoffs[2][2], pt3, pt3);
+
+        let actions = {{ C.ACTIONS }};
+        console.log(actions);
+
+        ctx.textAlign = 'right';
+        ctx.fillText(actions[0], 175, pt1);
+        ctx.fillText(actions[1], 175, pt2);
+        ctx.fillText(actions[2], 175, pt3);
+
+        ctx.textAlign = 'middle';
+        ctx.fillText(actions[0], pt1, 150);
+        ctx.fillText(actions[1], pt2, 150);
+        ctx.fillText(actions[2], pt3, 150);
+    });
+</script>
+{% endblock %}
+

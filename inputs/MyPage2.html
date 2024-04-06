@@ -1,0 +1,24 @@
+{{ block title }}
+    List of inputs
+{{ endblock }}
+{{ block content }}
+
+
+    <p>Choose the point on the scale that represents how much you like pizza:</p>
+<p>
+    Least &nbsp;
+    {{ for choice in form.pizza }}
+        {{ choice }}
+    {{ endfor }}
+    &nbsp; Most
+</p>
+
+    <p>Do you wish to accept the offer?</p>
+<button name="offer_accepted" value="True">Yes</button>
+<button name="offer_accepted" value="False">No</button>
+
+</p>
+
+    {{ next_button }}
+
+{{ endblock }}

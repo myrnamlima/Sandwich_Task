@@ -6,10 +6,10 @@ Your app description
 """
 
 
-class C(BaseConstants):
-    NAME_IN_URL = 'sandwich'
-    PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 1
+class Constants(BaseConstants):
+    name_in_url = 'sandwich'
+    players_per_group = None
+    num_rounds = 12
 
 
 class Subsession(BaseSubsession):
@@ -21,12 +21,25 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    pass
+    ordersSubmitted = models.IntegerField(initial=0)
+    totalErrors = models.IntegerField(initial=0)
+    averageErrors = models.FloatField(initial=0.0)
+    ordersRedone = models.IntegerField(initial=0)
+
+    def js_vars(player):
+        return dict(
+            ordersSubmitted=player.ordersSubmitted,
+            totalErrors=player.totalErrors,
+            averageErrors=player.averageErrors,
+            ordersRedone=player.ordersRedone,
+        )
 
 
 # PAGES
 class MyPage(Page):
-    timeout_seconds = 240
+    form_model = 'player'
+    timeout_seconds = 20
+
 
 
 
@@ -34,8 +47,10 @@ class ResultsWaitPage(WaitPage):
     pass
 
 
-class Results(Page):
+class Feedback(Page):
     pass
 
 
-page_sequence = [MyPage, ResultsWaitPage, Results]
+
+
+page_sequence = [MyPage, Feedback]

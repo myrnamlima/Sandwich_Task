@@ -1,6 +1,7 @@
 {{ block title }}
     Sandwich Shop
 {{ endblock }}
+
 {{ block content }}
 <div class="order">
     <p>Current Order: <span id="current-order"></span></p>
@@ -55,122 +56,128 @@
     <option value="Ranch">Ranch</option>
     <option value="No Condiments">No Condiments</option>
 </select>
-<!-- Add dropdowns for other ingredients -->
-
 
 <button id="submit-order">Submit Order</button>
 
 {{ formfields }}
+
+<input type="hidden" id="ordersSubmitted" name="ordersSubmitted" value="{{ player.ordersSubmitted }}">
+<input type="hidden" id="totalErrors" name="totalErrors" value="{{ player.totalErrors }}">
+<input type="hidden" id="averageErrors" name="averageErrors" value="{{ player.averageErrors }}">
+<input type="hidden" id="ordersRedone" name="ordersRedone" value="{{ player.ordersRedone }}">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
     $(document).ready(function() {
-    // Define possible orders
-    var orders = [
-    { name: "Cheeseburger with Mayo", bread: "Brioche", cheese: "Cheddar", meat: "Hamburger", veggie: "Tomato", cond: "Mayo"},
-    { name: "Turkey Sandwich with Yellow Mustard", bread: "White", cheese: "Swiss", meat: "Turkey", veggie: "No Veggies", cond: "Yellow Mustard" },
-    { name: "Veggie Wrap with Ranch", bread: "Wrap", meat: "No Meat", cheese: "American", veggie: "Lettuce", cond: "Ranch" },
-    { name: "Hamburger with Ketchup", bread: "Wheat", meat: "Hamburger", cheese: "No Cheese", veggie: "No Veggie", cond: "Ketchup" },
-    { name: "BLT with Mayo", bread: "Rye", cheese: "Swiss", meat: "Bacon", veggie: "Lettuce", cond: "Mayo" }
-];
+        // Define possible orders
+        var orders = [
+            { name: "Cheeseburger with Mayo", bread: "Brioche", cheese: "Cheddar", meat: "Hamburger", veggie: "Tomato", cond: "Mayo"},
+            { name: "Turkey Sandwich with Yellow Mustard", bread: "White", cheese: "Swiss", meat: "Turkey", veggie: "No Veggies", cond: "Yellow Mustard" },
+            { name: "Veggie Wrap with Ranch", bread: "Wrap", meat: "No Meat", cheese: "American", veggie: "Lettuce", cond: "Ranch" },
+            { name: "Hamburger with Ketchup", bread: "Wheat", meat: "Hamburger", cheese: "No Cheese", veggie: "No Veggie", cond: "Ketchup" },
+            { name: "BLT with Mayo", bread: "Rye", cheese: "Swiss", meat: "Bacon", veggie: "Lettuce", cond: "Mayo" }
+        ];
 
-    var ordersSubmitted = 0;
-    var totalErrors = 0;
-    var ordersRedone = 0;
-    var currentOrderIndex = -1;
+        // Retrieve oTree variables
+        var ordersSubmitted = {{ player.ordersSubmitted }};
+        var totalErrors = {{ player.totalErrors }};
+        var averageErrors = {{ player.averageErrors }};
+        var ordersRedone = {{ player.ordersRedone }};
 
-    var currentOrderIndex = localStorage.getItem('currentOrderIndex');
-    if (currentOrderIndex === null || currentOrderIndex === undefined) {
-        currentOrderIndex = Math.floor(Math.random() * orders.length);
-        localStorage.setItem('currentOrderIndex', currentOrderIndex);
-    }
+        function updateCurrentOrder() {
+            currentOrderIndex = Math.floor(Math.random() * orders.length);
+            var currentOrder = orders[currentOrderIndex];
+            $('#current-order').text(currentOrder.name);
 
-    function updateCurrentOrder() {
-        var currentOrder = orders[currentOrderIndex];
-        $('#current-order').text(currentOrder.name);
-
-    // Update the ingredients dropdown
-    var ingredientsDropdown = $('#ingredients-dropdown');
-    ingredientsDropdown.empty(); // Clear existing options
-    ingredientsDropdown.append($('<option>', {
-        value: '',
-        text: 'Ingredients'
-    }));
-    for (var key in currentOrder) {
-        if (key !== 'name') {
+            // Update the ingredients dropdown
+            var ingredientsDropdown = $('#ingredients-dropdown');
+            ingredientsDropdown.empty(); // Clear existing options
             ingredientsDropdown.append($('<option>', {
-                value: currentOrder[key],
-                text: currentOrder[key]
+                value: '',
+                text: 'Ingredients'
             }));
+            for (var key in currentOrder) {
+                if (key !== 'name') {
+                    ingredientsDropdown.append($('<option>', {
+                        value: currentOrder[key],
+                        text: currentOrder[key]
+                    }));
+                }
+            }
         }
-    }
-}
 
-    // Update the current order on page load
-    updateCurrentOrder();
+        // Update the current order on page load
+        updateCurrentOrder();
 
+        // Bind the updateCurrentOrder function to the submit-order button click event
+        $('#submit-order').on('click', function(event) {
+            event.preventDefault(); // Prevent form submission
 
-      // Bind the updateCurrentOrder function to the submit-order button click event
-$('#submit-order').on('click', function(event) {
-    event.preventDefault(); // Prevent form submission
+            var selectedBread = $('#bread-dropdown option:selected').text();
+            var selectedCheese = $('#cheese-dropdown option:selected').text();
+            var selectedMeat = $('#meat-dropdown option:selected').text();
+            var selectedVeggie = $('#veggie-dropdown option:selected').text();
+            var selectedCond = $('#cond-dropdown option:selected').text();
 
-    var selectedBread = $('#bread-dropdown option:selected').text();
-    var selectedCheese = $('#cheese-dropdown option:selected').text();
-    var selectedMeat = $('#meat-dropdown option:selected').text();
-    var selectedVeggie = $('#veggie-dropdown option:selected').text();
-    var selectedCond = $('#cond-dropdown option:selected').text();
+            // Check if the selected options match the current order
+            var currentOrder = orders[currentOrderIndex];
+            var errors = 0;
+            if (currentOrder.bread !== selectedBread || selectedBread === 'Select Bread') {
+                errors++;
+            }
+            if (currentOrder.meat !== selectedMeat || selectedMeat === 'Select Meat') {
+                errors++;
+            }
+            if (currentOrder.cheese !== selectedCheese || selectedCheese === 'Select Cheese') {
+                errors++;
+            }
+            if (currentOrder.veggie !== selectedVeggie || selectedVeggie === 'Select Vegetables') {
+                errors++;
+            }
+            if (currentOrder.cond !== selectedCond || selectedCond === 'Select Condiments') {
+                errors++;
+            }
 
-    // Check if the selected options match the current order
-    var currentOrder = orders[currentOrderIndex];
-    var errors = 0;
-    if (currentOrder.bread !== selectedBread || selectedBread === 'Select Bread') {
-        errors++;
-    }
-    if (currentOrder.meat !== selectedMeat || selectedMeat === 'Select Meat') {
-        errors++;
-    }
-    if (currentOrder.cheese !== selectedCheese || selectedCheese === 'Select Cheese') {
-        errors++;
-    }
-    if (currentOrder.veggie !== selectedVeggie || selectedVeggie === 'Select Vegetables') {
-        errors++;
-    }
-    if (currentOrder.cond !== selectedCond || selectedCond === 'Select Condiments') {
-        errors++;
-    }
+            // Display message based on errors
+            if (errors <= 4) {
+                alert('Order submitted successfully!');
+                ordersSubmitted++;
+                totalErrors += errors;
+                console.log("# of errors in this order: ", errors);
+                console.log("# of total errors: ", totalErrors);
+                console.log("# of orders submitted: ", ordersSubmitted);
+                // Calculate average errors
+                var averageErrors = totalErrors / ordersSubmitted;
+                console.log("Average number of errors: " + averageErrors);
+                updateCurrentOrder(); // Update the order for the next round
+                // Reset dropdowns to default state
+                $('#bread-dropdown').val('');
+                $('#cheese-dropdown').val('');
+                $('#meat-dropdown').val('');
+                $('#veggie-dropdown').val('');
+                $('#cond-dropdown').val('');
+            } else {
+                alert('You have more than 4 errors. Please remake the order.');
+                ordersRedone++;
+                console.log("# of orders redone: ", ordersRedone);
+            }
 
-    // Display message based on errors
-    if (errors <= 4) {
-        alert('Order submitted successfully!');
-        ordersSubmitted++;
-        totalErrors += errors;
-        console.log("# of errors in this order: ", errors);
-        console.log("# of total errors: ", totalErrors);
-        console.log("# of orders submitted: ", ordersSubmitted);
-        // Calculate average errors
-        var averageErrors = totalErrors / ordersSubmitted;
-        console.log("Average number of errors: " + averageErrors);
-        updateCurrentOrder(); // Update the order for the next round
-        // Reset dropdowns to default state
-        $('#bread-dropdown').val('');
-        $('#cheese-dropdown').val('');
-        $('#meat-dropdown').val('');
-        $('#veggie-dropdown').val('');
-        $('#cond-dropdown').val('');
-    } else {
-        alert('You have more than 4 errors. Please remake the order.');
-        ordersRedone++;
-        console.log("# of orders redone: ", ordersRedone);
-    }
-});
+            // Update hidden form fields with JavaScript variables
+            $('#ordersSubmitted').val(ordersSubmitted);
+            $('#totalErrors').val(totalErrors);
+            $('#averageErrors').val(averageErrors);
+            $('#ordersRedone').val(ordersRedone);
 
+            // Submit the form
+            $('#order-form').submit();
+        });
 
-// Bind the reset of dropdowns to the "Select" option
-    $('#bread-dropdown, #cheese-dropdown, #meat-dropdown, #veggie-dropdown, #cond-dropdown').on('change', function() {
-        if ($(this).val() === 'deselect') {
-            $(this).val('');
-        }
+        // Bind the reset of dropdowns to the "Select" option
+        $('#bread-dropdown, #cheese-dropdown, #meat-dropdown, #veggie-dropdown, #cond-dropdown').on('change', function() {
+            if ($(this).val() === 'deselect') {
+                $(this).val('');
+            }
+        });
     });
-});
-
 </script>
-
 {{ endblock }}

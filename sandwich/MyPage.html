@@ -18,16 +18,17 @@
     <option value="Wheat">Wheat</option>
     <option value="White">White</option>
     <option value="Wrap">Wrap</option>
+    <option value="Croissant">Croissant</option>
+    <option value="Sourdough">Sourdough</option>
+    <option value="Hoagie Roll">Hoagie Roll</option>
+    <option value="Kaiser Roll">Kaiser Roll</option>
+    <option value="Ciabatta">Ciabatta</option>
+    <option value="Bagel">Bagel</option>
+    <option value="Tortilla">Tortilla</option>
+    <option value="Pita">Pita</option>
+    <option value="French Bread">French Bread</option>
+    <option value="Baguette">Baguette</option>
     <option value="No Bread">No Bread</option>
-</select>
-<select id="meat-dropdown">
-    <option value="" disabled selected>Select Meat</option>
-    <option value="deselect">Deselect</option>
-    <option value="Ham">Ham</option>
-    <option value="Bacon">Bacon</option>
-    <option value="Hamburger">Hamburger</option>
-    <option value="Turkey">Turkey</option>
-    <option value="No Meat">No Meat</option>
 </select>
 
 <select id="cheese-dropdown">
@@ -36,16 +37,66 @@
     <option value="Cheddar">Cheddar</option>
     <option value="Swiss">Swiss</option>
     <option value="American">American</option>
+    <option value="Blue Cheese">Blue Cheese</option>
+    <option value="Provolone">Provolone</option>
+    <option value="Parmesan">Parmesan</option>
+    <option value="Pepper Jack">Pepper Jack</option>
+    <option value="Mozzarella">Mozzarella</option>
+    <option value="Feta">Feta</option>
     <option value="No Cheese">No Cheese</option>
 </select>
+
+<select id="meat-dropdown">
+    <option value="" disabled selected>Select Protein</option>
+    <option value="deselect">Deselect</option>
+    <option value="Ham">Ham</option>
+    <option value="Bacon">Bacon</option>
+    <option value="Hamburger">Hamburger</option>
+    <option value="Turkey">Turkey</option>
+    <option value="Tuna Salad">Tuna Salad</option>
+    <option value="Fried Chicken">Fried Chicken</option>
+    <option value="Steak">Steak</option>
+    <option value="BBQ Beef">BBQ Beef</option>
+    <option value="Grilled Chicken">Grilled Chicken</option>
+    <option value="Tuna Salad">Tuna Salad</option>
+    <option value="Roast Beef">Roast Beef</option>
+    <option value="Pastrami">Pastrami</option>
+    <option value="Egg Salad">Egg Salad</option>
+    <option value="Smoked Salmon">Smoked Salmon</option>
+    <option value="Lamb">Lamb</option>
+    <option value="Shrimp">Shrimp</option>
+    <option value="Pulled Pork">Pulled Pork</option>
+    <option value="Meatball">Meatball</option>
+    <option value="Tofu">Tofu</option>
+    <option value="Corned Beef">Corned Beef</option>
+    <option value="Chicken Salad">Chicken Salad</option>
+    <option value="Egg">Egg</option>
+    <option value="Hot Dog">Hot Dog</option>
+    <option value="Portobello Mushroom">Portobello Mushroom</option>
+    <option value="No Meat">No Meat</option>
+</select>
+
 <select id="veggie-dropdown">
     <option value="" disabled selected>Select Vegetables</option>
     <option value="deselect">Deselect</option>
     <option value="Lettuce">Lettuce</option>
     <option value="Tomato">Tomato</option>
     <option value="Onion">Onion</option>
+    <option value="Spinach">Spinach</option>
+    <option value="Zucchini">Zucchini</option>
+    <option value="Bell Pepper">Bell Pepper</option>
+    <option value="Eggplant">Eggplant</option>
+    <option value="Corn">Corn</option>
+    <option value="Black Beans">Black Beans</option>
+    <option value="Cucumber">Cucumber</option>
+    <option value="Carrot">Carrot</option>
+    <option value="Coleslaw">Coleslaw</option>
+    <option value="Sauerkraut">Sauerkraut</option>
+    <option value="Caramelized Onion">Caramelized Onion</option>
+    <option value="Relish">Relish</option>
     <option value="No Veggies">No Vegetables</option>
 </select>
+
 <select id="cond-dropdown">
     <option value="" disabled selected>Select Condiments</option>
     <option value="deselect">Deselect</option>
@@ -54,17 +105,34 @@
     <option value="Yellow Mustard">Yellow Mustard</option>
     <option value="Dijon Mustard">Dijon Mustard</option>
     <option value="Ranch">Ranch</option>
+    <option value="Buffalo Sauce">Buffalo Sauce</option>
+    <option value="Italian Dressing">Italian Dressing</option>
+    <option value="Marinara Sauce">Marinara Sauce</option>
+    <option value="Caesar Dressing">Caesar Dressing</option>
+    <option value="BBQ Sauce">BBQ Sauce</option>
+    <option value="Pesto">Pesto</option>
+    <option value="Balsamic Glaze">Balsamic Glaze</option>
+    <option value="Thousand Island Dressing">Thousand Island Dressing</option>
+    <option value="Sour Cream">Sour Cream</option>
+    <option value="Sriracha Mayo">Sriracha Mayo</option>
+    <option value="Dijon Mustard">Dijon Mustard</option>
+    <option value="Honey Mustard">Honey Mustard</option>
+    <option value="Cranberry Sauce">Cranberry Sauce</option>
+    <option value="Hummus">Hummus</option>
+    <option value="Tzatziki Sauce">Tzatziki Sauce</option>
     <option value="No Condiments">No Condiments</option>
 </select>
 
+
 <button id="submit-order">Submit Order</button>
+
+<input type="hidden" id="orders-submitted" name="orders_submitted" value="0">
+<input type="hidden" id="total-errors" name="total_errors" value="0">
+<input type="hidden" id="average-errors" name="average_errors" value="0">
+<input type="hidden" id="orders-redone" name="orders_redone" value="0">
 
 {{ formfields }}
 
-<input type="hidden" id="ordersSubmitted" name="ordersSubmitted" value="{{ player.ordersSubmitted }}">
-<input type="hidden" id="totalErrors" name="totalErrors" value="{{ player.totalErrors }}">
-<input type="hidden" id="averageErrors" name="averageErrors" value="{{ player.averageErrors }}">
-<input type="hidden" id="ordersRedone" name="ordersRedone" value="{{ player.ordersRedone }}">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
@@ -75,14 +143,65 @@
             { name: "Turkey Sandwich with Yellow Mustard", bread: "White", cheese: "Swiss", meat: "Turkey", veggie: "No Veggies", cond: "Yellow Mustard" },
             { name: "Veggie Wrap with Ranch", bread: "Wrap", meat: "No Meat", cheese: "American", veggie: "Lettuce", cond: "Ranch" },
             { name: "Hamburger with Ketchup", bread: "Wheat", meat: "Hamburger", cheese: "No Cheese", veggie: "No Veggie", cond: "Ketchup" },
-            { name: "BLT with Mayo", bread: "Rye", cheese: "Swiss", meat: "Bacon", veggie: "Lettuce", cond: "Mayo" }
+            { name: "BLT with Mayo", bread: "Rye", cheese: "Swiss", meat: "Bacon", veggie: "Lettuce", cond: "Mayo" },
+            { name: "Tuna Salad Sandwich", bread: "Wheat", cheese: "No Cheese", meat: "Tuna Salad", veggie: "Tomato", cond: "Mayo" },
+            { name: "Buffalo Chicken Sandwich", bread: "Brioche", cheese: "Blue Cheese", meat: "Fried Chicken", veggie: "Lettuce, Tomato", cond: "Buffalo Sauce" },
+            { name: "Grilled Cheese", bread: "White", cheese: "American", meat: "No Meat", veggie: "No Veggies", cond: "None" },
+            { name: "Ham and Egg Croissant", bread: "Croissant", cheese: "No Cheese", meat: "Ham, Egg", veggie: "Lettuce", cond: "None" },
+            { name: "Swiss Burger", bread: "Brioche", cheese: "Swiss", meat: "Beef Patty", veggie: "Eggplant", cond: "Mayo" },
+            { name: "Chicken Caesar Wrap", bread: "Wrap", cheese: "Parmesan", meat: "Grilled Chicken", veggie: "Romaine Lettuce", cond: "Caesar Dressing" },
+            { name: "Italian Sub", bread: "Hoagie Roll", cheese: "Provolone", meat: "Salami", veggie: "Lettuce", cond: "Italian Dressing" },
+            { name: "Philly Cheesesteak", bread: "Hoagie Roll", cheese: "Provolone", meat: "Steak", veggie: "Bell Pepper", cond: "Mayo" },
+            { name: "Eggplant Parmesan Sub", bread: "Hoagie Roll", cheese: "Provolone", meat: "Eggplant Parmesan", veggie: "No Veggies", cond: "Marinara Sauce" },
+            { name: "Tuna Melt", bread: "Sourdough", cheese: "Cheddar", meat: "Tuna Salad", veggie: "Tomato", cond: "Mayo" },
+            { name: "BBQ Beef Sandwich", bread: "Kaiser Roll", cheese: "No Cheese", meat: "BBQ Beef", veggie: "Coleslaw", cond: "BBQ Sauce" },
+            { name: "Southwest Chicken Wrap", bread: "Wrap", cheese: "Pepper Jack", meat: "Grilled Chicken", veggie: "Corn", cond: "Ranch" },
+            { name: "Pesto Turkey Panini", bread: "Ciabatta", cheese: "Mozzarella", meat: "Turkey", veggie: "Spinach", cond: "Pesto" },
+            { name: "Chicken Avocado Sandwich", bread: "Ciabatta", cheese: "Swiss", meat: "Grilled Chicken", veggie: "Avocado", cond: "Mayo" },
+            { name: "Grilled Veggie Panini", bread: "Ciabatta", cheese: "Mozzarella", meat: "No Meat", veggie: "Zucchini", cond: "Pesto" },
+            { name: "Turkey Club with Mustard", bread: "Rye", cheese: "Cheddar", meat: "Turkey", veggie: "Lettuce", cond: "Mustard" },
+            { name: "Roast Beef Sandwich", bread: "Wheat", cheese: "Swiss", meat: "Roast Beef", veggie: "Onion", cond: "Horseradish" },
+            { name: "Caprese Panini", bread: "Ciabatta", cheese: "Mozzarella", meat: "No Meat", veggie: "Tomato, Basil", cond: "Balsamic Glaze" },
+            { name: "Pastrami Reuben", bread: "Rye", cheese: "Swiss", meat: "Pastrami", veggie: "Sauerkraut", cond: "Thousand Island Dressing" },
+            { name: "Egg Salad Sandwich", bread: "White", cheese: "No Cheese", meat: "Egg Salad", veggie: "Lettuce", cond: "Mayo" },
+            { name: "Salmon Bagel with Cream Cheese", bread: "Bagel", cheese: "Cream Cheese", meat: "Smoked Salmon", veggie: "Cucumber", cond: "None" },
+            { name: "Veggie Quesadilla", bread: "Tortilla", cheese: "Cheddar", meat: "No Meat", veggie: "Bell Pepper, Onion", cond: "Salsa" },
+            { name: "Greek Gyro", bread: "Pita", cheese: "Feta", meat: "Lamb", veggie: "Lettuce, Tomato", cond: "Tzatziki Sauce" },
+            { name: "Shrimp Po' Boy", bread: "French Bread", cheese: "No Cheese", meat: "Shrimp", veggie: "Lettuce", cond: "Remoulade Sauce" },
+            { name: "Cobb Salad Wrap", bread: "Wrap", cheese: "Blue Cheese", meat: "Grilled Chicken", veggie: "Lettuce", cond: "Ranch" },
+            { name: "Meatball Sub", bread: "Hoagie Roll", cheese: "Provolone", meat: "Meatball", veggie: "No Veggies", cond: "Marinara Sauce" },
+            { name: "Vegetarian Burrito", bread: "Tortilla", cheese: "No Cheese", meat: "No Meat", veggie: "Black Beans, Rice", cond: "Sour Cream" },
+            { name: "Pulled Pork Sandwich", bread: "Brioche", cheese: "No Cheese", meat: "Pulled Pork", veggie: "Coleslaw", cond: "BBQ Sauce" },
+            { name: "Tofu Banh Mi", bread: "Baguette", cheese: "No Cheese", meat: "Tofu", veggie: "Cucumber", cond: "Sriracha Mayo" },
+            { name: "Classic Grilled Cheese", bread: "White", cheese: "American", meat: "No Meat", veggie: "No Veggies", cond: "None" },
+            { name: "Ham and Swiss Croissant", bread: "Croissant", cheese: "Swiss", meat: "Ham", veggie: "No Veggies", cond: "Dijon Mustard" },
+            { name: "Reuben Sandwich", bread: "Rye", cheese: "Swiss", meat: "Corned Beef", veggie: "Sauerkraut", cond: "Thousand Island Dressing" },
+            { name: "Chicken Salad Sandwich", bread: "Wheat", cheese: "No Cheese", meat: "Chicken Salad", veggie: "Lettuce", cond: "Mayo" },
+            { name: "Egg and Cheese Bagel", bread: "Bagel", cheese: "Cheddar", meat: "Egg", veggie: "No Veggies", cond: "No Condiments" },
+            { name: "Roast Beef Panini", bread: "Ciabatta", cheese: "Provolone", meat: "Roast Beef", veggie: "Caramelized Onion", cond: "Horseradish" },
+            { name: "Turkey Club Sandwich", bread: "White", cheese: "Cheddar", meat: "Turkey", veggie: "Tomato", cond: "Mayo" },
+            { name: "Hot Dog with Mustard and Relish", bread: "Hot Dog Bun", cheese: "No Cheese", meat: "Hot Dog", veggie: "Relish", cond: "Mustard" },
+            { name: "Grilled Veggie Wrap", bread: "Wrap", cheese: "Mozzarella", meat: "No Meat", veggie: "Zucchini, Bell Pepper", cond: "Pesto" },
+            { name: "Turkey and Avocado Wrap", bread: "Wrap", cheese: "Swiss", meat: "Turkey", veggie: "Avocado", cond: "Mayo" },
+            { name: "Grilled Chicken Sandwich", bread: "Ciabatta", cheese: "Swiss", meat: "Grilled Chicken", veggie: "Lettuce", cond: "Honey Mustard" },
+            { name: "Turkey and Cranberry Baguette", bread: "Baguette", cheese: "Swiss", meat: "Turkey", veggie: "Lettuce", cond: "Cranberry Sauce" },
+            { name: "Vegetarian Banh Mi", bread: "Baguette", cheese: "No Cheese", meat: "Tofu", veggie: "Cucumber, Carrot", cond: "Sriracha Mayo" },
+            { name: "Salmon BLT", bread: "Brioche", cheese: "No Cheese", meat: "Salmon", veggie: "Lettuce, Tomato", cond: "Mayo" },
+            { name: "Caprese Sandwich with Turkey", bread: "Ciabatta", cheese: "Mozzarella", meat: "Turkey", veggie: "Tomato", cond: "Balsamic Glaze" },
+            { name: "Grilled Portobello Panini", bread: "Sourdough", cheese: "Swiss", meat: "Portobello Mushroom", veggie: "Spinach, Onion", cond: "Pesto" },
+            { name: "Avocado and Hummus Wrap", bread: "Wrap", cheese: "No Cheese", meat: "No Meat", veggie: "Avocado, Lettuce, Bell Pepper", cond: "Hummus" }
+
         ];
 
         // Retrieve oTree variables
-        var ordersSubmitted = {{ player.ordersSubmitted }};
-        var totalErrors = {{ player.totalErrors }};
-        var averageErrors = {{ player.averageErrors }};
-        var ordersRedone = {{ player.ordersRedone }};
+        var ordersSubmitted = {{ player.orders_submitted }};
+        console.log(ordersSubmitted);
+        var totalErrors = {{ player.total_errors }};
+        console.log(totalErrors);
+        var averageErrors = {{ player.average_errors }};
+        console.log(averageErrors);
+        var ordersRedone = {{ player.orders_redone }};
+        console.log(ordersRedone);
 
         function updateCurrentOrder() {
             currentOrderIndex = Math.floor(Math.random() * orders.length);
@@ -162,22 +281,14 @@
                 console.log("# of orders redone: ", ordersRedone);
             }
 
-            // Update hidden form fields with JavaScript variables
-            $('#ordersSubmitted').val(ordersSubmitted);
-            $('#totalErrors').val(totalErrors);
-            $('#averageErrors').val(averageErrors);
-            $('#ordersRedone').val(ordersRedone);
+            });
 
-            // Submit the form
-            $('#order-form').submit();
-        });
-
-        // Bind the reset of dropdowns to the "Select" option
-        $('#bread-dropdown, #cheese-dropdown, #meat-dropdown, #veggie-dropdown, #cond-dropdown').on('change', function() {
-            if ($(this).val() === 'deselect') {
-                $(this).val('');
-            }
-        });
+            // Bind the reset of dropdowns to the "Select" option
+            $('#bread-dropdown, #cheese-dropdown, #meat-dropdown, #veggie-dropdown, #cond-dropdown').on('change', function() {
+                if ($(this).val() === 'deselect') {
+                    $(this).val('');
+                }
+            });
     });
 </script>
 {{ endblock }}

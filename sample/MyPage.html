@@ -1,0 +1,20 @@
+{{ block title }}
+    Page title
+{{ endblock }}
+{{ block content }}
+
+    {{ formfields }}
+    {{ next_button }}
+<script>
+    // Define variables
+var pay = 10;
+var time = 5;
+var effect = "positive";
+
+// Store variables in session storage
+sessionStorage.setItem('pay', pay);
+sessionStorage.setItem('time', time);
+sessionStorage.setItem('effect', effect);
+
+</script>
+{{ endblock }}

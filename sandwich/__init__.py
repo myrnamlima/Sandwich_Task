@@ -21,24 +21,37 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    ordersSubmitted = models.IntegerField(initial=0)
-    totalErrors = models.IntegerField(initial=0)
-    averageErrors = models.FloatField(initial=0.0)
-    ordersRedone = models.IntegerField(initial=0)
+    orders_submitted = models.IntegerField(initial=0)
+    total_errors = models.IntegerField(initial=0)
+    average_errors = models.FloatField(initial=0.0)
+    orders_redone = models.IntegerField(initial=0)
 
-    def js_vars(player):
-        return dict(
-            ordersSubmitted=player.ordersSubmitted,
-            totalErrors=player.totalErrors,
-            averageErrors=player.averageErrors,
-            ordersRedone=player.ordersRedone,
-        )
+
+def round_number(self):
+    return self.round_number
 
 
 # PAGES
 class MyPage(Page):
     form_model = 'player'
     timeout_seconds = 20
+
+    # Define form fields to capture oTree variables
+    @staticmethod
+    def vars_for_template(player: Player):
+        return {
+            'orders_submitted': player.orders_submitted,
+            'total_errors': player.total_errors,
+            'average_errors': player.average_errors,
+            'orders_redone': player.orders_redone,
+        }
+
+    # Define a method to update player variables when the form is submitted
+    def before_next_page(self):
+        self.player.orders_submitted = int(self.request.POST.get('orders_submitted'))
+        self.player.total_errors = int(self.request.POST.get('total_errors'))
+        self.player.average_errors = float(self.request.POST.get('average_errors'))
+        self.player.orders_redone = int(self.request.POST.get('orders_redone'))
 
 
 

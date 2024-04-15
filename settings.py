@@ -50,6 +50,12 @@ dict(
         num_demo_participants=1,
         app_sequence=['timeout'],
     ),
+    dict(
+        name='sample',
+        display_name='Sample',
+        num_demo_participants=1,
+        app_sequence=['sample'],
+    ),
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs

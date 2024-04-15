@@ -5,6 +5,8 @@
 
 {{ block content }}
 
+<p>You earned $ XX this period.</p>
+<br>
 <p>You submitted {{ player.orders_submitted }} orders.</p>
     <p>You had a total of {{ player.total_errors }} errors in your orders.</p>
     <p>You had {{ player.orders_zero_mistakes }} orders with 0 mistakes. </p>
@@ -13,9 +15,17 @@
     <p>You had {{ player.orders_three_mistakes }} orders with 3 mistakes. </p>
     <p>You had an average of {{ player.average_errors }} errors in your order.</p>
     <p>You had to remake {{ player.orders_redone }} orders because you got more than 3 errors in your order.</p>
+<br>
+<p>The sandwich shop's revenue for the period was $ XX.</p>
+<p>The sandwich price in the next period will be: $ XX.</p>
+
+Click on the Next button when you are ready to proceed.
+<br>
+
+{{ next_button }}
 
 
-    {{ next_button }}
+
 {{ endblock }}
 
 

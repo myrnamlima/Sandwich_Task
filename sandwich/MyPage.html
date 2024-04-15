@@ -62,6 +62,7 @@
     <option value="Roast Beef">Roast Beef</option>
     <option value="Pastrami">Pastrami</option>
     <option value="Egg Salad">Egg Salad</option>
+    <option value="Salmon">Salmon</option>
     <option value="Smoked Salmon">Smoked Salmon</option>
     <option value="Lamb">Lamb</option>
     <option value="Shrimp">Shrimp</option>
@@ -95,6 +96,7 @@
     <option value="Sauerkraut">Sauerkraut</option>
     <option value="Caramelized Onion">Caramelized Onion</option>
     <option value="Relish">Relish</option>
+    <option value="Avocado">Avocado</option>
     <option value="No Veggies">No Vegetables</option>
 </select>
 
@@ -121,6 +123,8 @@
     <option value="Cranberry Sauce">Cranberry Sauce</option>
     <option value="Hummus">Hummus</option>
     <option value="Tzatziki Sauce">Tzatziki Sauce</option>
+    <option value="Horseradish">Horseradish</option>
+    <option value="Salsa">Salsa</option>
     <option value="No Condiments">No Condiments</option>
 </select>
 
@@ -163,12 +167,12 @@
             { name: "Pastrami Reuben", bread: "Rye", cheese: "Swiss", meat: "Pastrami", veggie: "Sauerkraut", cond: "Thousand Island Dressing" },
             { name: "Egg Salad Sandwich", bread: "White", cheese: "No Cheese", meat: "Egg Salad", veggie: "Lettuce", cond: "Mayo" },
             { name: "Salmon Bagel with Cream Cheese", bread: "Bagel", cheese: "Cream Cheese", meat: "Smoked Salmon", veggie: "Cucumber", cond: "None" },
-            { name: "Veggie Quesadilla", bread: "Tortilla", cheese: "Cheddar", meat: "No Meat", veggie: "Bell Pepper, Onion", cond: "Salsa" },
+            { name: "Veggie Quesadilla", bread: "Tortilla", cheese: "Cheddar", meat: "No Meat", veggie: "Bell Pepper", cond: "Salsa" },
             { name: "Greek Gyro", bread: "Pita", cheese: "Feta", meat: "Lamb", veggie: "Lettuce, Tomato", cond: "Tzatziki Sauce" },
             { name: "Shrimp Po' Boy", bread: "French Bread", cheese: "No Cheese", meat: "Shrimp", veggie: "Lettuce", cond: "Remoulade Sauce" },
             { name: "Cobb Salad Wrap", bread: "Wrap", cheese: "Blue Cheese", meat: "Grilled Chicken", veggie: "Lettuce", cond: "Ranch" },
             { name: "Meatball Sub", bread: "Hoagie Roll", cheese: "Provolone", meat: "Meatball", veggie: "No Veggies", cond: "Marinara Sauce" },
-            { name: "Vegetarian Burrito", bread: "Tortilla", cheese: "No Cheese", meat: "No Meat", veggie: "Black Beans, Rice", cond: "Sour Cream" },
+            { name: "Vegetarian Burrito", bread: "Tortilla", cheese: "No Cheese", meat: "No Meat", veggie: "Black Beans", cond: "Sour Cream" },
             { name: "Pulled Pork Sandwich", bread: "Brioche", cheese: "No Cheese", meat: "Pulled Pork", veggie: "Coleslaw", cond: "BBQ Sauce" },
             { name: "Tofu Banh Mi", bread: "Baguette", cheese: "No Cheese", meat: "Tofu", veggie: "Cucumber", cond: "Sriracha Mayo" },
             { name: "Classic Grilled Cheese", bread: "White", cheese: "American", meat: "No Meat", veggie: "No Veggies", cond: "None" },
@@ -184,9 +188,9 @@
             { name: "Grilled Chicken Sandwich", bread: "Ciabatta", cheese: "Swiss", meat: "Grilled Chicken", veggie: "Lettuce", cond: "Honey Mustard" },
             { name: "Turkey and Cranberry Baguette", bread: "Baguette", cheese: "Swiss", meat: "Turkey", veggie: "Lettuce", cond: "Cranberry Sauce" },
             { name: "Vegetarian Banh Mi", bread: "Baguette", cheese: "No Cheese", meat: "Tofu", veggie: "Carrot", cond: "Sriracha Mayo" },
-            { name: "Salmon BLT", bread: "Brioche", cheese: "No Cheese", meat: "Salmon", veggie: "Lettuce, Tomato", cond: "Mayo" },
+            { name: "Salmon BLT", bread: "Brioche", cheese: "No Cheese", meat: "Salmon", veggie: "Tomato", cond: "Mayo" },
             { name: "Caprese Sandwich with Turkey", bread: "Ciabatta", cheese: "Mozzarella", meat: "Turkey", veggie: "Tomato", cond: "Balsamic Glaze" },
-            { name: "Grilled Portobello Panini", bread: "Sourdough", cheese: "Swiss", meat: "Portobello Mushroom", veggie: "Spinach, Onion", cond: "Pesto" },
+            { name: "Grilled Portobello Panini", bread: "Sourdough", cheese: "Swiss", meat: "Portobello Mushroom", veggie: "Spinach", cond: "Pesto" },
             { name: "Avocado and Hummus Wrap", bread: "Wrap", cheese: "No Cheese", meat: "No Meat", veggie: "Avocado", cond: "Hummus" }
 
         ];
@@ -196,10 +200,9 @@
         console.log(ordersSubmitted);
         var totalErrors = {{ player.total_errors }};
         console.log(totalErrors);
-        var averageErrors = 0;
-        console.log(averageErrors);
         var ordersRedone = {{ player.orders_redone }};
         console.log(ordersRedone);
+        var averageErrors = {{ player.average_errors}};
         var ordersZeroMistakes = {{ player.orders_zero_mistakes }};
         var ordersOneMistake = {{ player.orders_one_mistake }};
         var ordersTwoMistakes = {{ player.orders_two_mistakes }};
@@ -260,39 +263,39 @@
             }
 
             if (errors <= 3) {
-    alert('Order submitted successfully!');
-    ordersSubmitted++;
-    console.log("# of orders submitted: ",ordersSubmitted);
-    totalErrors += errors;
-    console.log("# of total errors: ", totalErrors);
-    if (errors === 0) {
-        ordersZeroMistakes++;
-        console.log("# or orders with zero mistakes: ", ordersZeroMistakes);
-    } else if (errors === 1) {
-        ordersOneMistake++;
-        console.log("# of orders with one mistake: ", ordersOneMistake);
-    } else if (errors === 2) {
-        ordersTwoMistakes++;
-        console.log("# of orders with two mistakes: ", ordersTwoMistakes);
-    } else {
-        ordersThreeMistakes++;
-        console.log("# of orders with three mistakes: ", ordersThreeMistakes);
-    }
-    // Calculate average errors
-    var averageErrors = totalErrors / ordersSubmitted;
-    console.log("# of average errors: ", averageErrors);
-    updateCurrentOrder();
-    // Reset dropdowns to default state
-    $('#bread-dropdown').val('');
-    $('#cheese-dropdown').val('');
-    $('#meat-dropdown').val('');
-    $('#veggie-dropdown').val('');
-    $('#cond-dropdown').val('');
-} else {
-    alert('You have more than 3 errors. Please remake the order.');
-    ordersRedone++;
-    console.log("# of orders redone: ", ordersRedone);
-}
+                ordersSubmitted++;
+                console.log("# of orders submitted: ",ordersSubmitted);
+                totalErrors += errors;
+                console.log("# of total errors: ", totalErrors);
+                var averageErrors = (totalErrors/ordersSubmitted);
+                console.log("# of average errors: ", averageErrors);
+            if (errors === 0) {
+                ordersZeroMistakes++;
+                console.log("# or orders with zero mistakes: ", ordersZeroMistakes);
+            } else if (errors === 1) {
+                ordersOneMistake++;
+                console.log("# of orders with one mistake: ", ordersOneMistake);
+            } else if (errors === 2) {
+                ordersTwoMistakes++;
+                console.log("# of orders with two mistakes: ", ordersTwoMistakes);
+            } else {
+                ordersThreeMistakes++;
+                console.log("# of orders with three mistakes: ", ordersThreeMistakes);
+            }
+
+            updateCurrentOrder();
+            // Reset dropdowns to default state
+            $('#bread-dropdown').val('');
+            $('#cheese-dropdown').val('');
+            $('#meat-dropdown').val('');
+            $('#veggie-dropdown').val('');
+            $('#cond-dropdown').val('');
+            } else {
+                alert('You have more than 3 errors. Please remake the order.');
+                ordersRedone++;
+            console.log("# of orders redone: ", ordersRedone);
+            }
+
             $('#orders-submitted').val(ordersSubmitted);
             $('#total-errors').val(totalErrors);
             $('#average-errors').val(averageErrors);

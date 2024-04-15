@@ -9,7 +9,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'sandwich'
     players_per_group = None
-    num_rounds = 4
+    num_rounds = 12
 
 
 class Subsession(BaseSubsession):
@@ -31,6 +31,7 @@ class Player(BasePlayer):
     orders_three_mistakes = models.IntegerField(initial=0)
 
 
+
 def round_number(self):
     return self.round_number
 
@@ -38,7 +39,7 @@ def round_number(self):
 # PAGES
 class MyPage(Page):
     form_model = 'player'
-    timeout_seconds = 25
+    timeout_seconds = 30
 
     @staticmethod
     def live_method(player, data):
@@ -58,12 +59,15 @@ class MyPage(Page):
 
 
 
+
+
 class ResultsWaitPage(WaitPage):
     pass
 
 
 class Feedback(Page):
-    def live_method(player, data):
+
+      def live_method(player, data):
         # Update player attributes with the received data
         player.orders_submitted = data['ordersSubmitted']
         player.total_errors = data['totalErrors']

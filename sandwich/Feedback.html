@@ -1,8 +1,19 @@
 {{ block title }}
     Feedback from Round {{player.round_number}}
+
 {{ endblock }}
 
 {{ block content }}
+
+<p>You submitted {{ player.orders_submitted }} orders.</p>
+    <p>You had a total of {{ player.total_errors }} errors in your orders.</p>
+    <p>You had {{ player.orders_zero_mistakes }} orders with 0 mistakes. </p>
+    <p>You had {{ player.orders_one_mistake }} orders with 1 mistake. </p>
+    <p>You had {{ player.orders_two_mistakes }} orders with 2 mistakes. </p>
+    <p>You had {{ player.orders_three_mistakes }} orders with 3 mistakes. </p>
+    <p>You had an average of {{ player.average_errors }} errors in your order.</p>
+    <p>You had to remake {{ player.orders_redone }} orders because you got more than 3 errors in your order.</p>
+
 
     {{ next_button }}
 {{ endblock }}

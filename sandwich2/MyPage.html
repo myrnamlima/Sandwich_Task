@@ -127,6 +127,10 @@
 
 <button id="submit-order">Submit Order</button>
 
+<input type="hidden" id="orders-submitted" name="orders_submitted" value="0">
+<input type="hidden" id="total-errors" name="total_errors" value="0">
+<input type="hidden" id="average-errors" name="average_errors" value="0">
+<input type="hidden" id="orders-redone" name="orders_redone" value="0">
 
 {{ formfields }}
 
@@ -143,11 +147,11 @@
             { name: "Hamburger with Ketchup", bread: "Wheat", meat: "Hamburger", cheese: "No Cheese", veggie: "No Veggie", cond: "Ketchup" },
             { name: "BLT with Mayo", bread: "Rye", cheese: "Swiss", meat: "Bacon", veggie: "Lettuce", cond: "Mayo" },
             { name: "Tuna Salad Sandwich", bread: "Wheat", cheese: "No Cheese", meat: "Tuna Salad", veggie: "Tomato", cond: "Mayo" },
-            { name: "Buffalo Chicken Sandwich", bread: "Brioche", cheese: "Blue Cheese", meat: "Fried Chicken", veggie: "Tomato", cond: "Buffalo Sauce" },
+            { name: "Buffalo Chicken Sandwich", bread: "Brioche", cheese: "Blue Cheese", meat: "Fried Chicken", veggie: "Lettuce, Tomato", cond: "Buffalo Sauce" },
             { name: "Grilled Cheese", bread: "White", cheese: "American", meat: "No Meat", veggie: "No Veggies", cond: "None" },
             { name: "Ham and Egg Croissant", bread: "Croissant", cheese: "No Cheese", meat: "Ham, Egg", veggie: "Lettuce", cond: "None" },
-            { name: "Swiss Burger", bread: "Brioche", cheese: "Swiss", meat: "Beef Patty", veggie: "Eggplant", cond: "Mayo" },
-            { name: "Chicken Caesar Wrap", bread: "Wrap", cheese: "Parmesan", meat: "Grilled Chicken", veggie: "Lettuce", cond: "Caesar Dressing" },
+            { name: "Swiss Burger with Ketchup", bread: "Brioche", cheese: "Swiss", meat: "Beef Patty", veggie: "Eggplant", cond: "Ketchup" },
+            { name: "Chicken Caesar Wrap", bread: "Wrap", cheese: "Parmesan", meat: "Grilled Chicken", veggie: "Romaine Lettuce", cond: "Caesar Dressing" },
             { name: "Italian Sub", bread: "Hoagie Roll", cheese: "Provolone", meat: "Salami", veggie: "Lettuce", cond: "Italian Dressing" },
             { name: "Philly Cheesesteak", bread: "Hoagie Roll", cheese: "Provolone", meat: "Steak", veggie: "Bell Pepper", cond: "Mayo" },
             { name: "Eggplant Parmesan Sub", bread: "Hoagie Roll", cheese: "Provolone", meat: "Eggplant Parmesan", veggie: "No Veggies", cond: "Marinara Sauce" },
@@ -179,15 +183,15 @@
             { name: "Roast Beef Panini", bread: "Ciabatta", cheese: "Provolone", meat: "Roast Beef", veggie: "Caramelized Onion", cond: "Horseradish" },
             { name: "Turkey Club Sandwich", bread: "White", cheese: "Cheddar", meat: "Turkey", veggie: "Tomato", cond: "Mayo" },
             { name: "Hot Dog with Mustard and Relish", bread: "Hot Dog Bun", cheese: "No Cheese", meat: "Hot Dog", veggie: "Relish", cond: "Mustard" },
-            { name: "Grilled Veggie Wrap", bread: "Wrap", cheese: "Mozzarella", meat: "No Meat", veggie: "Bell Pepper", cond: "Pesto" },
+            { name: "Grilled Veggie Wrap", bread: "Wrap", cheese: "Mozzarella", meat: "No Meat", veggie: "Zucchini, Bell Pepper", cond: "Pesto" },
             { name: "Turkey and Avocado Wrap", bread: "Wrap", cheese: "Swiss", meat: "Turkey", veggie: "Avocado", cond: "Mayo" },
             { name: "Grilled Chicken Sandwich", bread: "Ciabatta", cheese: "Swiss", meat: "Grilled Chicken", veggie: "Lettuce", cond: "Honey Mustard" },
             { name: "Turkey and Cranberry Baguette", bread: "Baguette", cheese: "Swiss", meat: "Turkey", veggie: "Lettuce", cond: "Cranberry Sauce" },
-            { name: "Vegetarian Banh Mi", bread: "Baguette", cheese: "No Cheese", meat: "Tofu", veggie: "Carrot", cond: "Sriracha Mayo" },
+            { name: "Vegetarian Banh Mi", bread: "Baguette", cheese: "No Cheese", meat: "Tofu", veggie: "Cucumber, Carrot", cond: "Sriracha Mayo" },
             { name: "Salmon BLT", bread: "Brioche", cheese: "No Cheese", meat: "Salmon", veggie: "Lettuce, Tomato", cond: "Mayo" },
             { name: "Caprese Sandwich with Turkey", bread: "Ciabatta", cheese: "Mozzarella", meat: "Turkey", veggie: "Tomato", cond: "Balsamic Glaze" },
             { name: "Grilled Portobello Panini", bread: "Sourdough", cheese: "Swiss", meat: "Portobello Mushroom", veggie: "Spinach, Onion", cond: "Pesto" },
-            { name: "Avocado and Hummus Wrap", bread: "Wrap", cheese: "No Cheese", meat: "No Meat", veggie: "Avocado", cond: "Hummus" }
+            { name: "Avocado and Hummus Wrap", bread: "Wrap", cheese: "No Cheese", meat: "No Meat", veggie: "Avocado, Lettuce, Bell Pepper", cond: "Hummus" }
 
         ];
 
@@ -196,14 +200,10 @@
         console.log(ordersSubmitted);
         var totalErrors = {{ player.total_errors }};
         console.log(totalErrors);
-        var averageErrors = 0;
+        var averageErrors = {{ player.average_errors }};
         console.log(averageErrors);
         var ordersRedone = {{ player.orders_redone }};
         console.log(ordersRedone);
-        var ordersZeroMistakes = {{ player.orders_zero_mistakes }};
-        var ordersOneMistake = {{ player.orders_one_mistake }};
-        var ordersTwoMistakes = {{ player.orders_two_mistakes }};
-        var ordersThreeMistakes = {{ player.orders_three_mistakes }};
 
         function updateCurrentOrder() {
             currentOrderIndex = Math.floor(Math.random() * orders.length);
@@ -230,7 +230,7 @@
         // Update the current order on page load
         updateCurrentOrder();
 
-             // Bind the updateCurrentOrder function to the submit-order button click event
+        // Bind the updateCurrentOrder function to the submit-order button click event
         $('#submit-order').on('click', function(event) {
             event.preventDefault(); // Prevent form submission
 
@@ -259,52 +259,31 @@
                 errors++;
             }
 
-            if (errors <= 3) {
-    alert('Order submitted successfully!');
-    ordersSubmitted++;
-    console.log("# of orders submitted: ",ordersSubmitted);
-    totalErrors += errors;
-    console.log("# of total errors: ", totalErrors);
-    if (errors === 0) {
-        ordersZeroMistakes++;
-        console.log("# or orders with zero mistakes: ", ordersZeroMistakes);
-    } else if (errors === 1) {
-        ordersOneMistake++;
-        console.log("# of orders with one mistake: ", ordersOneMistake);
-    } else if (errors === 2) {
-        ordersTwoMistakes++;
-        console.log("# of orders with two mistakes: ", ordersTwoMistakes);
-    } else {
-        ordersThreeMistakes++;
-        console.log("# of orders with three mistakes: ", ordersThreeMistakes);
-    }
-    // Calculate average errors
-    var averageErrors = totalErrors / ordersSubmitted;
-    console.log("# of average errors: ", averageErrors);
-    updateCurrentOrder();
-    // Reset dropdowns to default state
-    $('#bread-dropdown').val('');
-    $('#cheese-dropdown').val('');
-    $('#meat-dropdown').val('');
-    $('#veggie-dropdown').val('');
-    $('#cond-dropdown').val('');
-} else {
-    alert('You have more than 3 errors. Please remake the order.');
-    ordersRedone++;
-    console.log("# of orders redone: ", ordersRedone);
-}
-            $('#orders-submitted').val(ordersSubmitted);
-            $('#total-errors').val(totalErrors);
-            $('#average-errors').val(averageErrors);
-            $('#orders-redone').val(ordersRedone);
-            $('#orders-zero-mistakes').val(ordersZeroMistakes);
-            $('#orders-one-mistake').val(ordersOneMistake);
-            $('#orders-two-mistakes').val(ordersTwoMistakes);
-            $('#orders-three-mistakes').val(ordersThreeMistakes);
+            // Display message based on errors
+            if (errors <= 4) {
+                alert('Order submitted successfully!');
+                ordersSubmitted++;
+                totalErrors += errors;
+                console.log("# of errors in this order: ", errors);
+                console.log("# of total errors: ", totalErrors);
+                console.log("# of orders submitted: ", ordersSubmitted);
+                // Calculate average errors
+                var averageErrors = totalErrors / ordersSubmitted;
+                console.log("Average number of errors: " + averageErrors);
+                updateCurrentOrder(); // Update the order for the next round
+                // Reset dropdowns to default state
+                $('#bread-dropdown').val('');
+                $('#cheese-dropdown').val('');
+                $('#meat-dropdown').val('');
+                $('#veggie-dropdown').val('');
+                $('#cond-dropdown').val('');
+            } else {
+                alert('You have more than 4 errors. Please remake the order.');
+                ordersRedone++;
+                console.log("# of orders redone: ", ordersRedone);
+            }
 
-            // Call the function to send data to the server after processing the order
-            sendGameData();
-        });
+            });
 
             // Bind the reset of dropdowns to the "Select" option
             $('#bread-dropdown, #cheese-dropdown, #meat-dropdown, #veggie-dropdown, #cond-dropdown').on('change', function() {
@@ -312,26 +291,6 @@
                     $(this).val('');
                 }
             });
-
-
-
-        // Function to send data to the server
-        function sendGameData() {
-            var data = {
-                ordersSubmitted: ordersSubmitted,
-                totalErrors: totalErrors,
-                averageErrors: averageErrors,
-                ordersRedone: ordersRedone,
-                ordersZeroMistakes: ordersZeroMistakes,
-                ordersOneMistake: ordersOneMistake,
-                ordersTwoMistakes: ordersTwoMistakes,
-                ordersThreeMistakes: ordersThreeMistakes
-            };
-            liveSend(data);
-        }
-
-        // Call the function to update the current order on page load
-        updateCurrentOrder();
     });
 </script>
 {{ endblock }}

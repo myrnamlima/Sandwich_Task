@@ -1,0 +1,17 @@
+{{ block title }}
+    Feedback from Round {{player.round_number}}
+
+{{ endblock }}
+
+{{ block content }}
+
+<p>Orders Submitted: {{ orders_submitted }}</p>
+    <p>Total Errors: {{ total_errors }}</p>
+    <p>Average Errors: {{ average_errors }}</p>
+    <p>Orders Redone: {{ orders_redone }}</p>
+
+
+    {{ next_button }}
+{{ endblock }}
+
+

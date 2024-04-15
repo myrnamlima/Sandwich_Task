@@ -9,7 +9,7 @@ Your app description
 class Constants(BaseConstants):
     name_in_url = 'sandwich'
     players_per_group = None
-    num_rounds = 12
+    num_rounds = 4
 
 
 class Subsession(BaseSubsession):
@@ -25,6 +25,10 @@ class Player(BasePlayer):
     total_errors = models.IntegerField(initial=0)
     average_errors = models.FloatField(initial=0.0)
     orders_redone = models.IntegerField(initial=0)
+    orders_zero_mistakes = models.IntegerField(initial=0)
+    orders_one_mistake = models.IntegerField(initial=0)
+    orders_two_mistakes = models.IntegerField(initial=0)
+    orders_three_mistakes = models.IntegerField(initial=0)
 
 
 def round_number(self):
@@ -34,24 +38,22 @@ def round_number(self):
 # PAGES
 class MyPage(Page):
     form_model = 'player'
-    timeout_seconds = 20
+    timeout_seconds = 25
 
-    # Define form fields to capture oTree variables
     @staticmethod
-    def vars_for_template(player: Player):
-        return {
-            'orders_submitted': player.orders_submitted,
-            'total_errors': player.total_errors,
-            'average_errors': player.average_errors,
-            'orders_redone': player.orders_redone,
-        }
+    def live_method(player, data):
+        # Process the received data
+        # For example, you can store it in the database
+        player.orders_submitted = data['ordersSubmitted']
+        player.total_errors = data['totalErrors']
+        player.average_errors = data['averageErrors']
+        player.orders_redone = data['ordersRedone']
+        player.orders_zero_mistakes = data['ordersZeroMistakes']
+        player.orders_one_mistake = data['ordersOneMistake']
+        player.orders_two_mistakes = data['ordersTwoMistakes']
+        player.orders_three_mistakes = data['ordersThreeMistakes']
 
-    # Define a method to update player variables when the form is submitted
-    def before_next_page(self):
-        self.player.orders_submitted = int(self.request.POST.get('orders_submitted'))
-        self.player.total_errors = int(self.request.POST.get('total_errors'))
-        self.player.average_errors = float(self.request.POST.get('average_errors'))
-        self.player.orders_redone = int(self.request.POST.get('orders_redone'))
+
 
 
 
@@ -61,7 +63,28 @@ class ResultsWaitPage(WaitPage):
 
 
 class Feedback(Page):
-    pass
+    def live_method(player, data):
+        # Update player attributes with the received data
+        player.orders_submitted = data['ordersSubmitted']
+        player.total_errors = data['totalErrors']
+        player.average_errors = data['averageErrors']
+        player.orders_redone = data['ordersRedone']
+        player.orders_zero_mistakes = data['ordersZeroMistakes']
+        player.orders_one_mistake = data['ordersOneMistake']
+        player.orders_two_mistakes = data['ordersTwoMistakes']
+        player.orders_three_mistakes = data['ordersThreeMistakes']
+
+        def vars_for_template(player: Player):
+            return {
+                'orders_submitted': player.orders_submitted,
+                'total_errors': player.total_errors,
+                'average_errors': player.average_errors,
+                'orders_redone': player.orders_redone,
+                'orders_zero_mistakes': player.orders_zero_mistakes,
+                'orders_one_mistake': player.orders_one_mistake,
+                'orders_two_mistakes': player.orders_two_mistakes,
+                'orders_three_mistakes': player.orders_three_mistakes,
+            }
 
 
 
